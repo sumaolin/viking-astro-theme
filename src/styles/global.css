@@ -1,0 +1,201 @@
+@layer base {
+    /* 定义字体加载策略 */
+    @font-face {
+        font-family: 'Inter Variable';
+        src: url('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: swap;
+    }
+
+
+    /* 分别声明不同字重的 Noto Serif SC */
+    @font-face {
+        font-family: 'Noto Serif SC';
+        src: url('@fontsource/noto-serif-sc/files/noto-serif-sc-chinese-simplified-500-normal.woff2') format('woff2');
+        font-weight: 500;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Noto Serif SC';
+        src: url('@fontsource/noto-serif-sc/files/noto-serif-sc-chinese-simplified-700-normal.woff2') format('woff2');
+        font-weight: 700;
+        font-display: swap;
+    }
+
+    :root {
+        --color-text-main: 20 20 19; /* #141413 */
+        --color-bg-main: 250 249 245; /* #faf9f5 */
+        --color-bg-muted: 242 241 236; /* #F2F1EC - 稍微暗一点的背景色 */
+        --color-border-main: 20 20 19; /* #141413 - 保持边框与文字颜色一致 */
+    }
+    html.dark {
+        --color-text-main: 242 241 236; /* #F2F1EC */
+        --color-bg-main: 23 23 23; /* #171717 */
+        --color-bg-muted: 36 36 36; /* #242424 */
+        --color-border-main: 242 241 236; /* #F2F1EC */
+    }
+
+    /* Cyan */
+    /*
+    :root {
+        --color-text-main: 22 42 43;
+        --color-bg-main: 214 224 226;
+        --color-bg-muted: 204 216 219;
+        --color-border-main: 22 42 43;
+    }
+    html.dark {
+        --color-text-main: 214 224 226;
+        --color-bg-main: 22 42 43;
+        --color-bg-muted: 28 53 55;
+        --color-border-main: 214 224 226;
+    }
+    */
+
+    /* Green */
+    /*
+    :root {
+        --color-text-main: 58 66 56;
+        --color-bg-main: 243 239 230;
+        --color-bg-muted: 238 233 220;
+        --color-border-main: 58 66 56;
+    }
+    html.dark {
+        --color-text-main: 243 239 230;
+        --color-bg-main: 94 108 91;
+        --color-bg-muted: 89 103 86;
+        --color-border-main: 243 239 230;
+    }
+    */
+
+
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 确保 giscus 容器有明确的宽度 */
+.giscus {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* 强制 giscus 内部的 iframe 宽度为 100% */
+.giscus iframe {
+    width: 100% !important;
+    min-width: 100% !important;
+}
+/* 外部链接样式 */
+.external-link {
+    /* 使用浏览器默认下划线，但自定义样式 */
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: text-decoration-style 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.external-link:hover {
+    text-decoration-style: solid;
+}
+
+/* 暗黑模式下的外部链接样式调整 */
+html.dark .external-link {
+    text-decoration-color: rgb(var(--color-text-main) / 0.5); /* 降低暗模式下下划线的不透明度 */
+}
+
+/* 内联SVG图标样式 */
+.inline-svg-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.2em;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.external-link:hover .inline-svg-icon {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* 暗黑模式下的SVG图标样式调整 */
+html.dark .inline-svg-icon {
+    opacity: 0.8; /* 略微提高暗模式下的不透明度，增强可见性 */
+}
+
+html.dark .external-link:hover .inline-svg-icon {
+    opacity: 1;
+}
+
+/* 脚注引用样式 */
+a[data-footnote-ref] {
+  font-size: 0.75em;
+  vertical-align: super;
+  margin-left: 1px;
+  color: rgb(var(--color-text-main));
+  text-decoration: none;
+  background-color: rgb(var(--color-bg-muted));
+  padding: 0 3px;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+a[data-footnote-ref]:hover {
+  background-color: rgb(var(--color-border-main) / 0.1);
+}
+
+/* 脚注返回链接样式 - 替代方法 */
+a[data-footnote-backref] {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  background-color: rgb(var(--color-bg-muted));
+  transition: background-color 0.2s ease;
+  font-size: 0; /* 隐藏原始文本 */
+  position: relative;
+}
+
+a[data-footnote-backref]:hover {
+  background-color: rgb(var(--color-border-main) / 0.1);
+}
+
+/* 使用内容属性直接插入SVG */
+a[data-footnote-backref]::before {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23141413' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 14L4 9l5-5'/%3E%3Cpath d='M20 20v-7a4 4 0 0 0-4-4H4'/%3E%3C/svg%3E");
+  display: block;
+}
+
+/* 暗模式下的图标 */
+html.dark a[data-footnote-backref]::before {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23F2F1EC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 14L4 9l5-5'/%3E%3Cpath d='M20 20v-7a4 4 0 0 0-4-4H4'/%3E%3C/svg%3E");
+}
+
+/* 脚注区域样式 */
+.footnotes {
+  margin-top: 2rem;
+  border-top: 1px solid rgb(var(--color-border-main) / 0.2);
+  padding-top: 1rem;
+  font-size: 0.85em;
+  line-height: 1.4;
+}
+
+/* 脚注列表样式 */
+.footnotes ol {
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.footnotes li {
+  margin-bottom: 0.3rem;
+  padding-left: 0.5rem;
+}
+
+/* 脚注段落样式 */
+.footnotes li p {
+  margin: 0.3rem 0;
+}

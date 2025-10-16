@@ -1,0 +1,46 @@
+---
+import type { Page } from 'astro';
+import { locales } from '../i18n';
+import siteConfig from '../data/site-config';
+import ArrowLeft from '../icons/ArrowLeft.astro';
+import ArrowRight from '../icons/ArrowRight.astro';
+import IconButton from './IconButton.astro';
+
+const i18n = locales[siteConfig.locale];
+
+interface Props {
+    page: Page;
+    class?: string;
+}
+
+const { page, class: className } = Astro.props;
+---
+
+<nav class:list={['flex justify-between', className]} aria-label="Pagination">
+    <div class="flex flex-1 justify-start">
+        {
+            page.url.prev && (
+                <a href={page.url.prev} class="px-4 font-medium hover:underline">
+                    ← {i18n.components.pagination.prev}
+                </a>
+            )
+        }
+    </div>
+    <div class="flex flex-1 justify-center text-center">
+        <span class="px-4">
+            {i18n.components.pagination.page}
+            {page.currentPage}
+            {i18n.components.pagination.of}
+            {page.lastPage}
+        </span>
+    </div>
+    <div class="flex flex-1 justify-end">
+        {
+            page.url.next && (
+                <a href={page.url.next} class="px-4 font-medium hover:underline">
+                    {i18n.components.pagination.next} →
+                </a>
+            )
+        }
+    </div>
+</nav>

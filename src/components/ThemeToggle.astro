@@ -1,0 +1,42 @@
+---
+import { locales } from '../i18n';
+import siteConfig from '../data/site-config';
+
+const i18n = locales[siteConfig.locale];
+---
+
+<button id="theme-toggle" class="w-8 h-8 -mr-2 flex items-center justify-center" aria-label={i18n.components.nav.themeToggle}>
+    <svg class="w-4 h-4 fill-current" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="8" cy="8" r="8"></circle>
+    </svg>
+</button>
+
+<script>
+    import { toggleTheme } from '../store/theme';
+
+    document.addEventListener('astro:page-load', () => {
+        document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+    });
+</script>
+
+<script>
+    import { theme } from '../store/theme';
+
+    // 监听主题变化
+    theme.subscribe((value) => {
+        if (value === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    });
+
+    // 视图转换后重新应用主题
+    document.addEventListener('astro:after-swap', () => {
+        if (theme.get() === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    });
+</script>

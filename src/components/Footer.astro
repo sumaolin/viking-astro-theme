@@ -1,0 +1,41 @@
+---
+import { locales } from '../i18n';
+import siteConfig from '../data/site-config';
+
+const i18n = locales[siteConfig.locale];
+const footerNavLinks = siteConfig.footerNavLinks || [];
+const socialLinks = siteConfig.socialLinks || [];
+---
+
+<footer class="mt-auto">
+    <div class="w-full max-w-3xl mx-auto px-6 py-12">
+        {
+            (footerNavLinks.length > 0 || socialLinks.length > 0) && (
+                <div class="grid gap-8 mb-12 sm:grid-cols-2">
+                    {footerNavLinks.length > 0 && (
+                        <div class="flex flex-wrap gap-x-8 gap-y-4 text-sm">
+                            {footerNavLinks.map((link) => (
+                                <a class="hover:underline" href={link.href}>
+                                    {link.text}
+                                </a>
+                            ))}
+                        </div>
+                    )}
+                    {socialLinks.length > 0 && (
+                        <div class="flex flex-wrap gap-x-8 gap-y-4 text-sm">
+                            {socialLinks.map((link) => (
+                                <a class="hover:underline" href={link.href} target="_blank" rel="noopener noreferrer">
+                                    {link.text}
+                                </a>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            )
+        }
+        <div class="text-sm">
+            &copy; {new Date().getFullYear()}&nbsp;<a class="hover:underline hover:underline-offset-2" href="/">{siteConfig.title}</a>.
+            {i18n.components.footer.allRightsReserved}
+        </div>
+    </div>
+</footer>
